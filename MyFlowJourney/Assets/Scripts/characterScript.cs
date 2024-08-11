@@ -20,8 +20,6 @@ public class characterScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		isGrounded = CheckIfGrounded();
-
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
 			if(isGrounded && !hasJumped)
@@ -37,8 +35,6 @@ public class characterScript : MonoBehaviour
 			{
 				hasJumped = false;
 			}
-			//Rigidbody.velocity = Vector2.up * VerticalSpeed;
-			//Rigidbody.rotation += RotationalSpeed;
 		}
 
 		if(Input.GetKeyDown(KeyCode.D))
@@ -47,9 +43,15 @@ public class characterScript : MonoBehaviour
 			Rigidbody.velocity += Vector2.left * HorizontalSpeed * Time.deltaTime;
 	}
 
-	private bool CheckIfGrounded()
+	public void OnCollisionEnter2D(Collision2D collision)
 	{
-		var answer = Physics.Raycast(transform.position, -Vector3.up, 3);
-		return answer;
+		if(collision.gameObject.CompareTag("ground"))
+			isGrounded = true;
+	}
+
+	public void OnCollisionExit2D(Collision2D collision)
+	{
+		if (collision.gameObject.CompareTag("ground"))
+			isGrounded = false;
 	}
 }
