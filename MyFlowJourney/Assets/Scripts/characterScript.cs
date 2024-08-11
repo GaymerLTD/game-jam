@@ -6,7 +6,7 @@ public class characterScript : MonoBehaviour
 {
 	public Rigidbody2D Rigidbody;
 	private float HorizontalSpeed = 500;
-	private float VerticalSpeed = 250;
+	private float VerticalSpeed = 1500;
 	private float RotationalSpeed = 250;
 	private bool hasJumped = false;
 	private bool isGrounded = false;
@@ -24,7 +24,7 @@ public class characterScript : MonoBehaviour
 		{
 			if(isGrounded && !hasJumped)
 			{
-				Rigidbody.velocity = Vector2.up * VerticalSpeed * Time.deltaTime;
+				Rigidbody.velocity += Vector2.up * VerticalSpeed * Time.deltaTime;
 				hasJumped = true;
 			}
 			if(!isGrounded)
