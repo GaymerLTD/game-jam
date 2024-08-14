@@ -41,6 +41,7 @@ public class characterScript : MonoBehaviour
 			{
 				Debug.Log("Flipping");
 				Rigidbody.rotation += RotationalSpeed * Time.deltaTime;
+				// Check if we have flipped over here. If so add to a counter and then when we land add a boost
 			}
 		}
 
@@ -66,11 +67,5 @@ public class characterScript : MonoBehaviour
 			isGrounded = false;
 			Debug.Log("Lifted from the ground!");
 		}
-	}
-
-	public void OnTriggerEnter(Collider collider)
-	{
-		if (collider.gameObject.CompareTag("ground"))
-			Debug.Log("Bad hit");
 	}
 }
