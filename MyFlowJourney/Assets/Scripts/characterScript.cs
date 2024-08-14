@@ -7,17 +7,29 @@ public class characterScript : MonoBehaviour
 	public float VerticalSpeed = 1500;
 	public float MaxY = 3500;
 
-	public float HorizontalSpeed = 100;
-	public float MinX = 50;
-	public float MaxX = 200;
+	public float MinX = 1500;
+	public float HorizontalSpeed = 1750;
+	public float MaxX = 3500;
 
 	public float RotationalSpeed = 325;
 
-	public bool isGrounded = false;
+	public bool IsGrounded = false;
 
 	// Start is called before the first frame update
 	void Start()
 	{
+		VerticalSpeed = 1500;
+		MaxY = 3500;
+
+		MinX = 1500;
+		HorizontalSpeed = 1750;
+		MaxX = 3500;
+
+		RotationalSpeed = 325;
+
+		IsGrounded = false;
+
+
 		Rigidbody.velocity = Vector2.right * HorizontalSpeed;
 	}
 
@@ -26,16 +38,18 @@ public class characterScript : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
-			if(isGrounded)
+			if(IsGrounded)
 			{
-				Debug.Log("Jumping");
 				var newY = Math.Min(Rigidbody.velocity.y + VerticalSpeed * Time.deltaTime, MaxY * Time.deltaTime);
+				Debug.Log($"Jumping: {newY}");
+				Debug.Log($"Pre-jump velocity: {Rigidbody.velocity.ToString("F4")}");
 				Rigidbody.velocity += Vector2.up * newY;
-				isGrounded = false;
+				Debug.Log($"Postjump velocity: {Rigidbody.velocity.ToString("F4")}");
+				IsGrounded = false;
 			}
 		}
 
-		if(!isGrounded)
+		if(!IsGrounded)
 		{
 			if(Input.GetKey(KeyCode.Space))
 			{
@@ -54,17 +68,17 @@ public class characterScript : MonoBehaviour
 	{
 		if(collision.gameObject.CompareTag("ground"))
 		{
-			isGrounded = true;
+			IsGrounded = true;
 			Debug.Log("Hit the ground!");
 		}
 
 	}
 
 	public void OnCollisionExit2D(Collision2D collision)
-	{
+ 	{
 		if(collision.gameObject.CompareTag("ground"))
 		{
-			isGrounded = false;
+			IsGrounded = false;
 			Debug.Log("Lifted from the ground!");
 		}
 	}
