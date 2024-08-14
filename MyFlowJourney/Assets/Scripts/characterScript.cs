@@ -30,7 +30,7 @@ public class characterScript : MonoBehaviour
 		IsGrounded = false;
 
 
-		Rigidbody.velocity = Vector2.right * HorizontalSpeed;
+		Rigidbody.velocity = Vector2.right * (float)(HorizontalSpeed/100.0);
 	}
 
 	// Update is called once per frame
@@ -61,7 +61,7 @@ public class characterScript : MonoBehaviour
 
 		var xVelocity = Math.Min(Rigidbody.velocity.x, MaxX * Time.deltaTime);
 		xVelocity = Math.Max(xVelocity, HorizontalSpeed * Time.deltaTime);
-		Rigidbody.velocity = Rigidbody.velocity.y * Vector2.up + xVelocity * Vector2.right;
+		//Rigidbody.velocity = Rigidbody.velocity.y * Vector2.up + xVelocity * Vector2.right;
 	}
 
 	public void OnCollisionEnter2D(Collision2D collision)
