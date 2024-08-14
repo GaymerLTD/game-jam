@@ -6,7 +6,6 @@ using UnityEngine.U2D;
 public class EnvironmentGenerator : MonoBehaviour
 {
 	[SerializeField] private SpriteShapeController _spriteShapeController;
-	[SerializeField, Range(3f, 100f)] private int _levelStart = 0;
 	[SerializeField, Range(3f, 100f)] private int _levelEnd = 50;
 	[SerializeField, Range(1f, 100f)] private float _xMultiplier = 2f;
 	[SerializeField, Range(1f, 100f)] private float _yMultiplier = 2f;

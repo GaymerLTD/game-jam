@@ -1,20 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class characterScript : MonoBehaviour
 {
 	public Rigidbody2D Rigidbody;
-	private float HorizontalSpeed = 500;
-	private float VerticalSpeed = 1500;
-	private float RotationalSpeed = 250;
-	private bool hasJumped = false;
-	private bool isGrounded = false;
+	public float VerticalSpeed = 1500;
+	public float MaxY = 3500;
+
+	public float HorizontalSpeed = 100;
+	public float MinX = 50;
+	public float MaxX = 200;
+
+	public float RotationalSpeed = 325;
+
+	public bool isGrounded = false;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-
+		Rigidbody.velocity = Vector2.right * HorizontalSpeed;
 	}
 
 	// Update is called once per frame
@@ -22,36 +26,51 @@ public class characterScript : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
-			if(isGrounded && !hasJumped)
-			{
-				Rigidbody.velocity += Vector2.up * VerticalSpeed * Time.deltaTime;
-				hasJumped = true;
-			}
-			if(!isGrounded)
-			{
-				Rigidbody.rotation += RotationalSpeed * Time.deltaTime;
-			}
 			if(isGrounded)
 			{
-				hasJumped = false;
+				Debug.Log("Jumping");
+				var newY = Math.Min(Rigidbody.velocity.y + VerticalSpeed * Time.deltaTime, MaxY * Time.deltaTime);
+				Rigidbody.velocity += Vector2.up * newY;
+				isGrounded = false;
 			}
 		}
 
-		if(Input.GetKeyDown(KeyCode.D))
-			Rigidbody.velocity += Vector2.right * HorizontalSpeed * Time.deltaTime;
-		if(Input.GetKeyDown(KeyCode.A))
-			Rigidbody.velocity += Vector2.left * HorizontalSpeed * Time.deltaTime;
+		if(!isGrounded)
+		{
+			if(Input.GetKey(KeyCode.Space))
+			{
+				Debug.Log("Flipping");
+				Rigidbody.rotation += RotationalSpeed * Time.deltaTime;
+			}
+		}
+
+		var xVelocity = Math.Min(Rigidbody.velocity.x, MaxX * Time.deltaTime);
+		xVelocity = Math.Max(xVelocity, HorizontalSpeed * Time.deltaTime);
+		Rigidbody.velocity = Rigidbody.velocity.y * Vector2.up + xVelocity * Vector2.right;
 	}
 
 	public void OnCollisionEnter2D(Collision2D collision)
 	{
 		if(collision.gameObject.CompareTag("ground"))
+		{
 			isGrounded = true;
+			Debug.Log("Hit the ground!");
+		}
+
 	}
 
 	public void OnCollisionExit2D(Collision2D collision)
 	{
-		if (collision.gameObject.CompareTag("ground"))
+		if(collision.gameObject.CompareTag("ground"))
+		{
 			isGrounded = false;
+			Debug.Log("Lifted from the ground!");
+		}
+	}
+
+	public void OnTriggerEnter(Collider collider)
+	{
+		if (collider.gameObject.CompareTag("ground"))
+			Debug.Log("Bad hit");
 	}
 }
