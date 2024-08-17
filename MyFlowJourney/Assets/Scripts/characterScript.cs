@@ -19,9 +19,13 @@ public class characterScript : MonoBehaviour
 	public int NumFlips = 0;
 	public int MaxFlips = 10;
 	public float FlipBoost = 500;
+
+	public GameObject Ground;
 	// Start is called before the first frame update
 	void Start()
 	{
+		Ground.transform.position = Vector3.forward + 25*Vector3.down;
+
 		VerticalSpeed = 1500;
 		MaxY = 1000;
 		antiGravity = 10f;
@@ -84,13 +88,18 @@ public class characterScript : MonoBehaviour
 		if(collision.gameObject.CompareTag("ground"))
 		{
 			Rigidbody.gravityScale = 10;
-			IsGrounded = true;
+ 			IsGrounded = true;
 			var boost = FlipBoost * NumFlips;
 			var deltaT = Time.deltaTime;
+			if(boost > 0) Debug.Log($"Boosting with {boost}");
 			BoostX(boost, deltaT);
 			NumFlips = 0;
 		}
+	}
 
+	public void OnTriggerEnter2D(Collider2D collision)
+	{
+		Debug.Log("Game over");
 	}
 
 	public void BoostX(float boost, float currentDeltaTime)
