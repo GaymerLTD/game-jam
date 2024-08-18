@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class characterController : MonoBehaviour
@@ -87,14 +85,12 @@ public class characterController : MonoBehaviour
         {
             didihitground = true;
             Destroy(gameObject);
-            cam.SetActive(false);
 
         }
         if(collision.tag == "Rock")
         {
             didihitground = true;
             Destroy(gameObject);
-            cam.SetActive(false);
         }
     }
 }

@@ -5,23 +5,13 @@ using UnityEngine;
 public class camrafollow : MonoBehaviour
 {
     public Transform target;
-    
     public Vector3 offset;
-    
 
-    public characterController controler;
-    private void LateUpdate()
+    private void Update()
     {
         Vector3 newpos = target.position + offset;
         newpos.z = transform.position.z;
         transform.position = newpos;
-       
-       
     }
-   
-
-
-
-
 
 }

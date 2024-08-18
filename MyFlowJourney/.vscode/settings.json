@@ -56,5 +56,9 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "myFlowJourney.sln"
+    "dotnet.defaultSolution": "myFlowJourney.sln",
+    "cSpell.words": [
+        "Raycast",
+        "Rigidbody"
+    ]
 }
