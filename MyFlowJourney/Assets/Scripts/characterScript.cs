@@ -10,7 +10,7 @@ public class characterScript : MonoBehaviour
 	public float antiGravity;
 
 	public float MinX = 800;
-	public float HorizontalSpeed = 175;
+	public float HorizontalSpeed = 125;
 	public float MaxX = 1000;
 
 	public float RotationalSpeed = 325;
@@ -24,6 +24,7 @@ public class characterScript : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
+		Ground = GameObject.FindGameObjectWithTag("ground");
 		Ground.transform.position = Vector3.forward + 25*Vector3.down;
 
 		VerticalSpeed = 1500;
@@ -31,7 +32,7 @@ public class characterScript : MonoBehaviour
 		antiGravity = 10f;
 
 		MinX = 2000;
-		HorizontalSpeed = 1750;
+		HorizontalSpeed = 1000;
 		MaxX = 3500;
 
 		RotationalSpeed = 325;
