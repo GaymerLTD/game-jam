@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class characterScript : MonoBehaviour
 {
+	public Camera cameraComponent;
+
 	public Rigidbody2D Rigidbody;
 	public float VerticalSpeed = 1500;
 	public float MaxY = 3500;
@@ -84,6 +86,7 @@ public class characterScript : MonoBehaviour
 				}
 			}
 		}
+		cameraComponent.transform.rotation = new Quaternion() { eulerAngles=new Vector3(0, 0, 0)};
 
 		BoostX(xAcceleration, currentDeltaTime);
 	}
