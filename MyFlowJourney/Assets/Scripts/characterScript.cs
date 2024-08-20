@@ -9,19 +9,19 @@ public class characterScript : MonoBehaviour
 	public float MaxVerticalSpeed;
 	public float antiGravity;
 
-	public float minXAcceleration;
-	public float xAcceleration;
-	public float maxXAcceleration;
+	public float minXAcceleration=250;
+	public float xAcceleration=400;
+	public float maxXAcceleration=500;
 
-	public float minXVelocity;
-	public float maxXVelocity;
+	public float minXVelocity=1000;
+	public float maxXVelocity=7500;
 
-	public float RotationalSpeed = 325;
+	public float RotationalSpeed = 270;
 
 	public bool IsGrounded = false;
 	public int NumFlips = 0;
 	public int MaxFlips = 10;
-	public float FlipBoost = 500;
+	public float FlipBoost = 1000;
 
 	public GameObject Ground;
 	// Start is called before the first frame update
@@ -34,11 +34,12 @@ public class characterScript : MonoBehaviour
 		MaxY = 1000;
 		antiGravity = 10f;
 
-		// minXAcceleration = 5;
-		// xAcceleration = 7.5f;
-		// maxXAcceleration = 10;
-
-		RotationalSpeed = 325;
+		minXAcceleration = 250;
+		xAcceleration = 400;
+		maxXAcceleration = 500;
+		minXVelocity = 1000;
+		maxXVelocity = 7500;
+		FlipBoost = 1000;
 
 		IsGrounded = false;
 
