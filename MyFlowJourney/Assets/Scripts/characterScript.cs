@@ -9,9 +9,12 @@ public class characterScript : MonoBehaviour
 	public float MaxVerticalSpeed;
 	public float antiGravity;
 
-	public float MinX = 800;
-	public float HorizontalSpeed = 125;
-	public float MaxX = 1000;
+	public float minXAcceleration;
+	public float xAcceleration;
+	public float maxXAcceleration;
+
+	public float minXVelocity;
+	public float maxXVelocity;
 
 	public float RotationalSpeed = 325;
 
@@ -31,15 +34,15 @@ public class characterScript : MonoBehaviour
 		MaxY = 1000;
 		antiGravity = 10f;
 
-		MinX = 2000;
-		HorizontalSpeed = 1000;
-		MaxX = 3500;
+		// minXAcceleration = 5;
+		// xAcceleration = 7.5f;
+		// maxXAcceleration = 10;
 
 		RotationalSpeed = 325;
 
 		IsGrounded = false;
 
-		Rigidbody.velocity = Vector2.right * (float)(HorizontalSpeed / 100.0);
+		Rigidbody.velocity = Vector2.right * (float)(xAcceleration);
 	}
 
 	// Update is called once per frame
@@ -81,7 +84,7 @@ public class characterScript : MonoBehaviour
 			}
 		}
 
-		BoostX(0, currentDeltaTime);
+		BoostX(xAcceleration, currentDeltaTime);
 	}
 
 	public void OnCollisionEnter2D(Collision2D collision)
@@ -103,11 +106,25 @@ public class characterScript : MonoBehaviour
 		Debug.Log("Game over");
 	}
 
-	public void BoostX(float boost, float currentDeltaTime)
+	public void BoostX(float a_x, float currentDeltaTime)
 	{
-		var xVelocity = Math.Min(Rigidbody.velocity.x + boost * currentDeltaTime, MaxX * currentDeltaTime);
-		xVelocity = Math.Max(xVelocity, HorizontalSpeed * currentDeltaTime);
-		Rigidbody.velocity = Rigidbody.velocity.y * Vector2.up + xVelocity * Vector2.right;
+		// Clamp
+		a_x = Clamp(a_x, maxXAcceleration, minXAcceleration);
+		// Get new Vx
+		var changeInVx = a_x * currentDeltaTime;
+		var newVx = Rigidbody.velocity.x + changeInVx;
+
+		// Re-compute with the change
+		newVx = Clamp(newVx, maxXVelocity*currentDeltaTime, minXVelocity*currentDeltaTime);
+
+		// Apply the new velocity
+		Rigidbody.velocity = Rigidbody.velocity.y * Vector2.up + newVx * Vector2.right;
+	}
+
+	public float Clamp(float x, float upper, float lower)
+	{
+		var answer = Math.Max(Math.Min(x, upper), lower);
+		return answer;
 	}
 
 	public void OnCollisionExit2D(Collision2D collision)
