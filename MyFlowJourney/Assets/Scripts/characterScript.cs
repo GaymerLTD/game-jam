@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class characterScript : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class characterScript : MonoBehaviour
 	public int MaxFlips = 10;
 	public float FlipBoost = 1000;
 
+	public Text ScoreDisplay;
+	private int score;
+
 	public GameObject Ground;
 	// Start is called before the first frame update
 	void Start()
@@ -46,6 +50,7 @@ public class characterScript : MonoBehaviour
 		IsGrounded = false;
 
 		Rigidbody.velocity = Vector2.right * (float)(xAcceleration);
+		score = 0;
 	}
 
 	// Update is called once per frame
@@ -89,6 +94,8 @@ public class characterScript : MonoBehaviour
 		cameraComponent.transform.rotation = new Quaternion() { eulerAngles=new Vector3(0, 0, 0)};
 
 		BoostX(xAcceleration, currentDeltaTime);
+		score = (int)(transform.position.x / 20);
+		ScoreDisplay.text = score.ToString();
 	}
 
 	public void OnCollisionEnter2D(Collision2D collision)
