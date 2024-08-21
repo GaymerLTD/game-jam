@@ -12,12 +12,12 @@ public class characterScript : MonoBehaviour
 	public float MaxVerticalSpeed;
 	public float antiGravity;
 
-	public float minXAcceleration=250;
-	public float xAcceleration=400;
-	public float maxXAcceleration=500;
+	public float minXAcceleration = 250;
+	public float xAcceleration = 400;
+	public float maxXAcceleration = 500;
 
-	public float minXVelocity=1000;
-	public float maxXVelocity=7500;
+	public float minXVelocity = 1000;
+	public float maxXVelocity = 7500;
 
 	public float RotationalSpeed = 270;
 
@@ -29,12 +29,14 @@ public class characterScript : MonoBehaviour
 	public Text ScoreDisplay;
 	private int score;
 
+	private float prevScoreDistance;
+
 	public GameObject Ground;
 	// Start is called before the first frame update
 	void Start()
 	{
 		Ground = GameObject.FindGameObjectWithTag("ground");
-		Ground.transform.position = Vector3.forward + 25*Vector3.down;
+		Ground.transform.position = Vector3.forward + 25 * Vector3.down;
 
 		VerticalSpeed = 1500;
 		MaxY = 1000;
@@ -51,6 +53,7 @@ public class characterScript : MonoBehaviour
 
 		Rigidbody.velocity = Vector2.right * (float)(xAcceleration);
 		score = 0;
+		prevScoreDistance = 0;
 	}
 
 	// Update is called once per frame
@@ -84,17 +87,24 @@ public class characterScript : MonoBehaviour
 				var prevRotation = Rigidbody.rotation;
 				Rigidbody.rotation += RotationalSpeed * Time.deltaTime;
 				Rigidbody.rotation = WrapAngle(Rigidbody.rotation);
- 				if(prevRotation < -45 && Rigidbody.rotation > -45)
+				if(prevRotation < -45 && Rigidbody.rotation > -45)
 				{
-					if (NumFlips < MaxFlips) NumFlips++;
+					if(NumFlips < MaxFlips) NumFlips++;
 					Debug.Log($"Flipped {NumFlips} times.");
 				}
 			}
 		}
-		cameraComponent.transform.rotation = new Quaternion() { eulerAngles=new Vector3(0, 0, 0)};
+		cameraComponent.transform.rotation = new Quaternion() { eulerAngles = new Vector3(0, 0, 0) };
 
 		BoostX(xAcceleration, currentDeltaTime);
-		score = (int)(transform.position.x / 20);
+
+		if(transform.position.x - prevScoreDistance > 20)
+		{
+			score++;
+			prevScoreDistance = transform.position.x;
+		}
+
+
 		ScoreDisplay.text = score.ToString();
 	}
 
@@ -103,11 +113,12 @@ public class characterScript : MonoBehaviour
 		if(collision.gameObject.CompareTag("ground"))
 		{
 			Rigidbody.gravityScale = 10;
- 			IsGrounded = true;
+			IsGrounded = true;
 			var boost = FlipBoost * NumFlips;
 			var deltaT = Time.deltaTime;
 			if(boost > 0) Debug.Log($"Boosting with {boost}");
 			BoostX(boost, deltaT);
+			score += NumFlips;
 			NumFlips = 0;
 		}
 	}
@@ -126,7 +137,7 @@ public class characterScript : MonoBehaviour
 		var newVx = Rigidbody.velocity.x + changeInVx;
 
 		// Re-compute with the change
-		newVx = Clamp(newVx, maxXVelocity*currentDeltaTime, minXVelocity*currentDeltaTime);
+		newVx = Clamp(newVx, maxXVelocity * currentDeltaTime, minXVelocity * currentDeltaTime);
 
 		// Apply the new velocity
 		Rigidbody.velocity = Rigidbody.velocity.y * Vector2.up + newVx * Vector2.right;
