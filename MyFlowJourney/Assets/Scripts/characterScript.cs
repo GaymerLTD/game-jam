@@ -7,24 +7,23 @@ public class characterScript : MonoBehaviour
 	public Camera cameraComponent;
 
 	public Rigidbody2D Rigidbody;
-	public float VerticalSpeed = 1500;
-	public float MaxY = 3500;
-	public float MaxVerticalSpeed;
+	public float VerticalSpeed;
+	public float MaxY;
 	public float antiGravity;
 
-	public float minXAcceleration = 250;
-	public float xAcceleration = 400;
-	public float maxXAcceleration = 500;
+	public float minXAcceleration;
+	public float xAcceleration;
+	public float maxXAcceleration;
 
-	public float minXVelocity = 1000;
-	public float maxXVelocity = 7500;
+	public float minXVelocity;
+	public float maxXVelocity;
 
 	public float RotationalSpeed = 270;
 
 	public bool IsGrounded = false;
 	public int NumFlips = 0;
 	public int MaxFlips = 10;
-	public float FlipBoost = 1000;
+	public float FlipBoost;
 
 	public Text ScoreDisplay;
 	private int score;
