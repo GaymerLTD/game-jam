@@ -28,14 +28,15 @@ public class characterScript : MonoBehaviour
 
 	public Text ScoreDisplay;
 	private int score;
+	private readonly string GROUND_TAG = "ground";
 
-	private float prevScoreDistance;
+  private float prevScoreDistance;
 
 	public GameObject Ground;
 	// Start is called before the first frame update
 	void Start()
 	{
-		Ground = GameObject.FindGameObjectWithTag("ground");
+		Ground = GameObject.FindGameObjectWithTag(GROUND_TAG);
 		Ground.transform.position = Vector3.forward + 25 * Vector3.down;
 
 		VerticalSpeed = 1500;
@@ -110,7 +111,7 @@ public class characterScript : MonoBehaviour
 
 	public void OnCollisionEnter2D(Collision2D collision)
 	{
-		if(collision.gameObject.CompareTag("ground"))
+		if(collision.gameObject.CompareTag(GROUND_TAG))
 		{
 			Rigidbody.gravityScale = 10;
 			IsGrounded = true;
@@ -151,7 +152,7 @@ public class characterScript : MonoBehaviour
 
 	public void OnCollisionExit2D(Collision2D collision)
 	{
-		if(collision.gameObject.CompareTag("ground"))
+		if(collision.gameObject.CompareTag(GROUND_TAG))
 		{
 			Rigidbody.gravityScale = 1;
 			IsGrounded = false;
