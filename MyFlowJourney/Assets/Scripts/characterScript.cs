@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class characterScript : MonoBehaviour
 {
-	public Camera cameraComponent;
+	[SerializeField] public Camera cameraComponent;
 
 	public Rigidbody2D Rigidbody;
 	public float VerticalSpeed;
@@ -114,30 +114,11 @@ public class characterScript : MonoBehaviour
 			Rigidbody.velocity = Vector2.zero;
 		}
 
-		if (!IsGrounded)
-		{
-			if (Input.GetKey(KeyCode.Space))
-			{
-				var prevRotation = Rigidbody.rotation;
-				Rigidbody.rotation += RotationalSpeed * Time.deltaTime;
-				Rigidbody.rotation = WrapAngle(Rigidbody.rotation);
-				if (prevRotation < -45 && Rigidbody.rotation > -45)
-				{
-					if (NumFlips < MaxFlips) NumFlips++;
-					Debug.Log($"Flipped {NumFlips} times.");
-				}
-			}
-		}
-		cameraComponent.transform.rotation = new Quaternion() { eulerAngles = new Vector3(0, 0, 0) };
-
-		BoostX(xAcceleration, currentDeltaTime);
-
 		if (transform.position.x - prevScoreDistance > 20)
 		{
 			score++;
 			prevScoreDistance = transform.position.x;
 		}
-
 
 		ScoreDisplay.text = score.ToString();
 	}
