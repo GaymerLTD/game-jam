@@ -2,6 +2,7 @@
 # Edit at httpswww.toptal.comdevelopersgitignoretemplates=vs,unity
 !packages/
 !Packages/
+output/
 ### Unity ###
 # This .gitignore file should be placed at the root of your Unity project directory
 #
