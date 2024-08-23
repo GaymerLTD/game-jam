@@ -60,7 +60,7 @@ public class characterScript : MonoBehaviour
 
 		Rigidbody.velocity = Vector2.right * (float)(xAcceleration);
 
-		playClip(secondaryAudioSource, backgroundMusic, true, 0.1f);
+		playClip(secondaryAudioSource, backgroundMusic, true, 0.075f);
 		score = 0;
 		prevScoreDistance = 0;
 	}
@@ -75,14 +75,14 @@ public class characterScript : MonoBehaviour
 			{
 				if (IsGrounded)
 				{
-					double ratio = 1 / 100.0;
-					currentDeltaTime = (float)(ratio);
-					if (currentDeltaTime >= 1 / 50.0)
+					double ratio = 1 / 75.0;
+					Debug.Log("Time: "+currentDeltaTime);
+					if (currentDeltaTime >= 1 / 75.0)
 					{
 						currentDeltaTime = (float)(ratio);
 					}
 
-					float possibleY = Rigidbody.velocity.y + 0.1f * Rigidbody.velocity.x + antiGravity * currentDeltaTime;
+					float possibleY = Rigidbody.velocity.y + 0.1f * Rigidbody.velocity.x;
 					float maxY = MaxY * currentDeltaTime;
 					var newY = Math.Max(possibleY, maxY);
 
@@ -90,8 +90,8 @@ public class characterScript : MonoBehaviour
 					IsGrounded = false;
 				}
 			}
-
-			if (!IsGrounded)
+      currentDeltaTime = Time.deltaTime;
+      if (!IsGrounded)
 			{
 				if (Input.GetKey(KeyCode.Space))
 				{
